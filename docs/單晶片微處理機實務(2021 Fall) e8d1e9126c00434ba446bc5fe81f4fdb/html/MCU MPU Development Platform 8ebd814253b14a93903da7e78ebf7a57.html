@@ -1,0 +1,745 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>MCU/MPU Development Platform </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8ebd8142-53b1-4a93-903d-a7e78ebf7a57" class="page sans"><header><img class="page-cover-image" src="MCU%20MPU%20Development%20Platform%208ebd814253b14a93903da7e78ebf7a57/%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99_(2).png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="Course%20Overview%202b7a3fc233914b33b9724487f19c1b0e/yang-g-tr.png"/></div><h1 class="page-title">MCU/MPU Development Platform </h1><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>課程單元</th><td>微控制器 / 微處理器 開發平台簡介</td></tr></tbody></table></header><div class="page-body"><h1 id="9104b74a-7c18-4451-a55e-db80dcec4c26" class="block-color-pink_background">學習目標</h1><ul id="2f0209f7-18d2-44b2-8b8a-bdadb052b8f4" class="bulleted-list"><li style="list-style-type:disc">電腦運作原理及基本程式設計概念。</li></ul><ul id="eea92882-4720-40f7-ab96-9caf0c38fdab" class="bulleted-list"><li style="list-style-type:disc">MCU vs. MPU - Arduino vs. Raspberry Pi</li></ul><ul id="bc87c4da-07fc-46e8-9d99-96077aa479c0" class="bulleted-list"><li style="list-style-type:disc">使用線上工具 Snakify 自主學習 Python。</li></ul><ul id="65b3373d-5a66-4aba-91c8-091ba2f86aa4" class="bulleted-list"><li style="list-style-type:disc">使用線上工具 TinkerCAD 自主學習 Arduino Programming。</li></ul><ul id="9c930439-23f7-4e97-811f-0a297b8ae1c3" class="bulleted-list"><li style="list-style-type:disc">下載安裝 Thonny IDE - 初學者的 Python 開發工具。</li></ul><h1 id="cf00812f-9087-4abe-927d-75e67b5b9b7f" class="block-color-pink_background">參考資料</h1><ul id="f624e2d5-ff2d-4884-b951-4f496773d5c8" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.python.org/">Python 官方網站 (https://www.python.org/)</a></li></ul><ul id="fe9a0f5a-a49e-4b1f-8c23-9978895a476b" class="bulleted-list"><li style="list-style-type:disc"><a href="https://snakify.org/en/">Snakify - 線上學習網</a></li></ul><ul id="b1a91e84-bd2c-42e2-b0b1-7b309f11966b" class="bulleted-list"><li style="list-style-type:disc"><a href="https://thonny.org/">Thonny - Python IDE for beginners</a></li></ul><ul id="a524c6a6-bfb9-49bb-bc5a-d011d1f104a8" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tinkercad.com/">TinkerCAD - Online Arduino Emulator (Blockly and C/C++)</a></li></ul><ul id="4ef8606e-1eb2-4c1a-8d2c-e47ecddeee2d" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tutorialspoint.com/python3/index.htm">tutorialspoint - Python 3 Tutorial</a></li></ul><ul id="740c7330-dfc1-4fa7-aa88-a3c2e8fc92c7" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.arduino.cc/reference/en/">Arduino Programing Reference</a></li></ul><ul id="a9cde0a7-29aa-465e-ba8f-04089d351097" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.zuvio.com.tw/">Zuvio - 大學師生互動平台</a></li></ul><h2 id="d26f1860-1f1a-48a7-8d68-c51c42eadcd1" class="block-color-pink_background">課程設計</h2><h3 id="03148695-d8ba-42f3-a45e-b7bd2e512d9b" class="block-color-teal_background">How Computer Work</h3><div id="e5fe5190-fdea-47e4-a750-dcf19933238c" class="column-list"><div id="1fad5839-071a-4779-8e5d-2560d04e9a57" style="width:50%" class="column"><figure id="67a465d1-eec3-4d78-bc09-b08a90d2aea4"><div class="source"><a href="https://www.youtube.com/watch?v=xnyFYiK2rSY">https://www.youtube.com/watch?v=xnyFYiK2rSY</a></div></figure><figure id="19449a60-791f-4163-96d7-bbae58e1aae3"><div class="source"><a href="https://www.youtube.com/watch?v=ZoqMiFKspAA&amp;t=7s">https://www.youtube.com/watch?v=ZoqMiFKspAA&amp;t=7s</a></div></figure></div><div id="ed54764f-0f51-4aab-bef8-2a59a638d8b1" style="width:50%" class="column"><figure id="44ae398c-fc2d-45fc-9834-af6a8eec2039"><div class="source"><a href="https://www.youtube.com/watch?v=DKGZlaPlVLY&amp;t=5s">https://www.youtube.com/watch?v=DKGZlaPlVLY&amp;t=5s</a></div></figure></div></div><h3 id="c5f7b836-e4df-4ec8-a6fa-c60bf1442cf9" class="block-color-teal_background">Raspberry Pi vs. Arduino</h3><div id="0050bbc8-d270-480f-949c-90c335d8be77" class="column-list"><div id="d0d9ea4d-976e-4266-8420-01b7d154ecdf" style="width:50%" class="column"><figure id="6e946605-d508-479f-8625-234ea4d5fe6f"><div class="source"><a href="https://www.youtube.com/watch?v=7vhvnaWUZjE">https://www.youtube.com/watch?v=7vhvnaWUZjE</a></div></figure></div><div id="5947f6ad-2725-4a96-98f8-31754016401b" style="width:50%" class="column"><figure id="65caab7c-504a-4bfc-97b8-6a385b832756"><div class="source"><a href="https://www.youtube.com/watch?v=p40OetppIDg&amp;t=5s">https://www.youtube.com/watch?v=p40OetppIDg&amp;t=5s</a></div></figure></div></div><p id="a32499cb-0559-454e-a324-e89e14e27c9d" class="">
+</p><h3 id="7e1c9be8-cf7d-4520-b447-e0baef66721f" class="block-color-teal_background">Raspberry Pi - Python Programming</h3><ul id="d39445a5-9ee6-4b5a-a56c-a7be98212d15" class="bulleted-list"><li style="list-style-type:disc"><a href="https://snakify.org/en/">Snakify - Learn Python 3 Online</a></li></ul><ul id="cae5bdb0-0e27-44cc-8de3-56b9b4922cf3" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tutorialspoint.com/python3/index.htm">tutorialspoint - Python 3 Tutorial</a></li></ul><h3 id="8b494adc-4093-4f83-9c88-9280683b41e4" class="block-color-teal_background">Arduino - C/C++ Programming</h3><ul id="e65fc930-1e08-47c2-b1be-281129e37369" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tinkercad.com/">TinkerCAD - Online Arduino Emulator (Blockly and C/C++)</a></li></ul><ul id="83c7bee1-ab45-4f9d-aa92-465cb6b06567" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.arduino.cc/reference/en/">Arduino Programing Reference</a></li></ul><p id="b4e0b825-b727-4a86-81b3-3b3ed38c7b01" class="">
+</p><h3 id="ca0b5142-8682-410e-a61a-606aaa5e15f8" class="block-color-teal_background">課程的 Python 作業樣板 </h3><hr id="70a826ab-bb42-4e5b-98e0-fb4d24753912"/><p id="f1ec050f-21f0-46ea-b37f-680df9854064" class="block-color-pink"><strong>Template 1 : 不需要輸入資料，處理後直接輸出結果</strong></p><div id="44b31a1b-30bf-4d95-ba2f-6409ea59d247" class="column-list"><div id="bdb82b66-cc8f-4cdc-a1a1-cfa39621e657" style="width:62.5%" class="column"><pre id="c2408ab4-4c8b-4ef7-aafe-e488270923a4" class="code"><code>#! /bin/python3
+
+def main():
+	print(&quot;Hello, Python world!&quot;)
+
+if __name__==&quot;__main__&quot;:
+    main()
+    exit(0)</code></pre></div><div id="8edcb53a-8ae5-4f9f-889a-943fc305a104" style="width:37.5%" class="column"><figure id="689ebed1-c400-42f0-af46-c48ed7e4ee81" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled.png"><img style="width:192px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled.png"/></a></figure></div></div><div id="8e2c02dc-928b-4057-9a6a-48e0a5691a9c" class="column-list"><div id="d5791fd1-2e97-4d3c-9f5f-512a3b2b4ba6" style="width:62.5%" class="column"><pre id="2f77f88e-0e7f-4436-9ff5-19db6fcc690d" class="code"><code>#! /bin/python3
+
+def drawTriangle(l):
+    seq = range(1,l+1)
+    if (l&lt;0):
+        seq = range(-l,0,-1)
+    for i in seq:
+        print(&quot;*&quot;*i)
+        
+def main():
+    drawTriangle(5)
+    print()
+    drawTriangle(-5)
+    
+if __name__==&quot;__main__&quot;:
+    main()
+    exit(0)</code></pre></div><div id="8f530d79-d4a5-45a4-85c9-2b581d54d2e0" style="width:37.5%" class="column"><figure id="366abf8f-eab5-46c2-9bca-4a71fa91ab32" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%201.png"><img style="width:84px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%201.png"/></a></figure></div></div><p id="db06b807-de95-4c1a-9cae-7f16b87c6c39" class="block-color-red"><mark class="highlight-pink"><strong>Template 2 : 由終端機輸入「整數/浮點數/字串」資料，並在處理後輸出結果</strong></mark></p><div id="27d6cd2b-cbc7-41db-a47f-c079d6a9af22" class="column-list"><div id="3b73f72c-64cc-4353-9c1e-8531d4edc8c0" style="width:62.5%" class="column"><pre id="4e1d3ed5-45e6-4e62-932d-e9e7c0b50e09" class="code"><code>#! /bin/python3
+
+def doSomething(a,b):
+    print(a+b)
+
+def main():
+    a, b = [int(v) for v in input().split()]
+    doSomething(a,b)
+ 
+if __name__==&quot;__main__&quot;:
+    main()
+    exit(0)</code></pre></div><div id="0df28f3b-05a9-430a-a625-17ef1b06db47" style="width:37.50000000000001%" class="column"><figure id="d2b95711-98a8-4690-bd58-bb92a5383114" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%202.png"><img style="width:144px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%202.png"/></a></figure></div></div><div id="2ab4fc50-5b18-4854-a32d-5fdcaa96bb93" class="column-list"><div id="d3b76abe-cabb-4104-9ed7-4490cec8fe4b" style="width:62.5%" class="column"><pre id="d9811d44-8496-4d1b-85f9-ed2c1d721d4c" class="code"><code>#! /bin/python3
+
+def sum(nums):
+    s = 0
+    for n in nums:
+        s+=n
+    return s
+
+def main():
+    nums = [int(v) for v in input().split()]
+    print(sum(nums))
+ 
+if __name__==&quot;__main__&quot;:
+    main()
+    exit(0)</code></pre></div><div id="6a3a7a07-561a-446e-8a01-f99e87626d43" style="width:37.5%" class="column"><figure id="8be449aa-9523-47e9-bec3-7070f77d9aa0" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%203.png"><img style="width:144px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%203.png"/></a></figure></div></div><h3 id="1ed7a789-7baa-4cd0-9d8b-a69dff6c960d" class="block-color-teal_background">課堂練習</h3><hr id="5ac46eab-8544-484b-a9e1-173a83348d18"/><ul id="cc13870c-a0f7-4fc3-ab71-40168fa86b85" class="bulleted-list"><li style="list-style-type:disc">請參考作業樣板程式 <mark class="highlight-red">Template 1</mark>，印出一個8層的正三角形。</li></ul><div id="2f2b362c-e56c-4079-b7db-18fb148dd2fb" class="column-list"><div id="2d696749-8f37-4aa9-a626-7904e3d8fd92" style="width:62.5%" class="column"><pre id="2e24147b-b35c-4022-93e7-17c8b0900aa4" class="code"><code>def drawRTriangle(l):
+    for i in range(1,l+1):
+        print(&quot; &quot;*(l-i)+&quot;*&quot;*(i*2-1))
+        
+def main():
+    drawRTriangle(8)
+    
+if __name__==&quot;__main__&quot;:
+    main()
+    exit(0)</code></pre></div><div id="5e1bf25c-b3b0-4af7-9017-1066675ed10d" style="width:37.5%" class="column"><figure id="31040c77-5e2d-4ec4-b0e8-cabb87a546cd" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%204.png"><img style="width:120px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%204.png"/></a></figure></div></div><ul id="5f9b9aba-2c83-4355-826f-0555e9824969" class="bulleted-list"><li style="list-style-type:disc">請參考作業樣板程式 <mark class="highlight-red">Template 2</mark>，由終端機輸入任意「浮點數」數列，經比對判斷後輸出數列中的最大值。
+<pre id="7c188421-51fa-4833-a696-d33b7f91c939" class="code"><code>#! /bin/python3
+
+def maxF(nums):
+    m = nums[0]
+    for f in nums[1:]:
+        if f&gt;m:
+            m = f
+    return m
+
+def main():
+    nums = [float(v) for v in input().split()]
+    print(maxF(nums))
+ 
+if __name__==&quot;__main__&quot;:
+    main()
+    exit(0)</code></pre><figure id="9f416cba-dbf8-49c5-a2bb-9742c977feb6" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%205.png"><img style="width:432px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%205.png"/></a></figure></li></ul><h1 id="563e841f-4753-48ce-97f0-1ea2e4caefd3" class="block-color-pink_background">課堂作業</h1><p id="f318464f-0db6-4c18-b1b8-332cf768f676" class="block-color-teal_background">Homework 01 -  Snakify Python 程式問題練習。 <mark class="highlight-pink"><strong>驗收期限：期中考前一週 (10/31)。</strong></mark></p><div id="a557781e-8948-4033-9f0a-9508a5a39508" class="column-list"><div id="80ab5f3c-e3b2-4963-b095-ec5b85349970" style="width:31.25%" class="column"><ul id="1570ba7b-7e5f-4dc6-b6aa-de3cc42d15bf" class="block-color-orange bulleted-list"><li style="list-style-type:disc">請完成 Lesson 1~5 中的所有題目。</li></ul><ul id="cc099ab1-a9b0-4c69-aceb-0c9e2477d076" class="block-color-orange bulleted-list"><li style="list-style-type:disc">請務必先註冊且登入你的 Snakify 帳號。<figure id="a18ceb93-9186-4b4d-bd94-df93470dac2d" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%206.png"><img style="width:108px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%206.png"/></a></figure></li></ul></div><div id="87748ec5-0613-4c90-9531-fa9fb78ad21f" style="width:68.75%" class="column"><figure id="9a25d3ac-bdef-4a23-9388-f4aff8ab0734" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%207.png"><img style="width:3740px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%207.png"/></a></figure></div></div><p id="c2e29895-00b7-41b7-9947-e7518e17c8d7" class="block-color-teal_background">Homework 02 -  下載安裝 Thonny IDE，並且會基本的操作。 <mark class="highlight-pink"><strong>驗收期限：—。</strong></mark></p><div id="eb8c0b1a-9545-4d6e-9b79-d55ac8af19cc" class="column-list"><div id="3e723372-eb44-4164-a662-ac20f8427f27" style="width:18.75%" class="column"><figure id="b481eacf-4714-4993-9c9b-a89a2f9cdfc8" class="image"><a href="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%206.png"><img style="width:108px" src="Python%20Fundamental%201%20372e876571854a759118a9b37eb65c77/Untitled%206.png"/></a></figure></div><div id="2b6c12d7-0de5-4896-a502-187db93e7346" style="width:81.25%" class="column"><ul id="7226030b-416b-43a8-b568-59c69350605e" class="block-color-orange bulleted-list"><li style="list-style-type:disc">下載安裝 Thonny IDE</li></ul><ul id="e3cc45f3-5bf0-4ecd-875c-a2a26c22cb65" class="block-color-orange bulleted-list"><li style="list-style-type:disc">練習『課程的 Python 作業樣板』 </li></ul><ul id="b290875d-71e0-4807-9f01-ac988b141c5c" class="block-color-orange bulleted-list"><li style="list-style-type:disc">練習『課堂練習』</li></ul><p id="1f4e4fcf-de5d-4f47-aca2-ba2779f925c7" class="">
+</p></div></div></div></article></body></html>

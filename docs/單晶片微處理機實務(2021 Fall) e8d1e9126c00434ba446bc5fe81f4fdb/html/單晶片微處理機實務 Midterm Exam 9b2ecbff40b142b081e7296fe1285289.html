@@ -1,0 +1,678 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>單晶片微處理機實務 Midterm Exam</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9b2ecbff-40b1-42b0-81e7-296fe1285289" class="page sans"><header><img class="page-cover-image" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/mcu5.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%20Review%20-%20Python%20Basics%20ae4137d357234467b33a4de6ddb6a3fd/yang-tr-wb.png"/></div><h1 class="page-title">單晶片微處理機實務 Midterm Exam</h1><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>課程單元</th><td></td></tr></tbody></table></header><div class="page-body"><h1 id="5314f856-4d6b-4f61-beca-55d4c9eb6b9b" class="block-color-purple_background">微處理器 Python  程式設計 - Raspberry Pi </h1><figure class="block-color-orange callout" style="white-space:pre-wrap;display:flex" id="c3a3a5cf-786c-4a9e-a3bd-06dcfe05f9cb"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02.png"/></div><div style="width:100%">以下為 Python Snakify 練習題，『務必』在 Raspberry Pi 環境下完成 Python 程式的測試驗證，你可以選擇使用 Thonny IDE 或 Jupyter Notebook，熟悉 Raspberry Pi 環境下開發 Python 程式也是考試的一部分。</div></figure><figure class="block-color-orange callout" style="white-space:pre-wrap;display:flex" id="8fc1aef8-a745-4b07-b68c-32ccf883e0d1"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02.png"/></div><div style="width:100%">你必須從 Snakify 中取出至少 5 組輸入資料，在 Raspberry Pi 環境下測試你的程式。</div></figure><h3 id="e3b0007d-486b-4158-b66b-c4513045be34" class="block-color-blue_background">Problem 01 - Chess board - same color (Lesson 3)</h3><blockquote id="d87c2289-bbbd-41e6-b6c8-ecbc67936655" class=""><a href="https://snakify.org/en/lessons/if_then_else_conditions/problems/chess_board/">https://snakify.org/en/lessons/if_then_else_conditions/problems/chess_board/</a></blockquote><div id="2f9e5822-4027-4d0c-a6bd-8fee145008d3" class="column-list"><div id="1ae1bbb5-3f9c-4216-88f9-42bab6eae795" style="width:56.25%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="9b532a30-6551-47e2-bf6e-7acc08d08b52"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02%201.png"/></div><div style="width:100%">Given two cells of a chessboard. If they are <code>painted in one color</code>, print the word YES, and if in a different color - NO. The program <code>receives the input of four numbers from 1 to 8</code>, each specifying the column and row number, first two - for the first cell, and then the last two - for the second cell.</div></figure></div><div id="85b3021e-9c66-4c71-bcd1-7c17f6e7b671" style="width:43.75%" class="column"><figure id="731c2f3b-1e41-4047-9e1a-171860bbdc48" class="image"><a href="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/Untitled.png"><img style="width:1074px" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/Untitled.png"/></a></figure></div></div><h3 id="9c138a68-eb33-43e0-b366-5b6251991455" class="block-color-blue_background">Problem 02 -  Lost card (Lesson 4)</h3><blockquote id="e583344e-b938-48e6-9d32-25981538a293" class=""><a href="https://snakify.org/en/lessons/for_loop_range/problems/lost_card/">https://snakify.org/en/lessons/for_loop_range/problems/lost_card/</a></blockquote><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c8bc67c0-0884-4d20-bf48-b16c3ba7c375"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02%202.png"/></div><div style="width:100%">There was a set of cards with numbers from 1 to N. <code>One of the card is now lost</code>. Determine the number on that lost card given the numbers for the remaining cards. Given a number N, followed by N − 1 integers - representing the numbers on the remaining cards (<code>distinct integers in the range from 1 to N</code>). Find and print the number on the lost card.</div></figure><p id="900ef065-3bb8-4cf2-b41c-1be176ebcc44" class="">
+</p><h3 id="dd0b4324-9f7a-4660-87bf-2d4c8163cc18" class="block-color-blue_background">Problem 03 -  <strong>The second maximum (Lesson 6)</strong></h3><blockquote id="c8f1a9fa-3ec9-4c8f-abd8-c795f809e8b7" class=""><a href="https://snakify.org/en/lessons/while_loop/problems/seq_second_max/">https://snakify.org/en/lessons/while_loop/problems/seq_second_max/</a></blockquote><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="588cf148-f276-4c87-9c02-afd83df40e9d"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02%203.png"/></div><div style="width:100%">The sequence consists of <code>distinct</code> positive integer numbers and ends with the number 0. Determine the value of <code>the second largest element</code> in this sequence. It is guaranteed that the sequence has <code>at least two elements</code>.</div></figure><p id="b32f444d-c378-476d-94da-05fb7fe7598d" class="">
+</p><h3 id="00c23e77-8511-4799-92cf-e1ecaf60da65" class="block-color-blue_background">Problem 04 -  Queens (Lesson 7)</h3><blockquote id="72147aef-c1f5-48de-8bf8-68c82e647e54" class=""><a href="https://snakify.org/en/lessons/lists/problems/queens/">https://snakify.org/en/lessons/lists/problems/queens/</a></blockquote><div id="e2348f29-bc34-4c10-9927-ce6609163541" class="column-list"><div id="260c1267-b707-43e6-a6b8-31f834dc8694" style="width:56.25%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3761355b-de30-4728-a8c5-a28a66a1bbf7"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02%204.png"/></div><div style="width:100%">In chess it is known that it is possible to <code>place 8 queens on an 8×8 chess board</code> such that none of them can attack another. Given a placement of 8 queens on the board, determine if there is a pair of queens that can attach each other on the next move. <code>Print the word NO if no queen can attack another</code>, <code>otherwise print YES.</code> The input consists of eight coordinate pairs, one pair per line, with each pair giving the position of a queen on a standard chess board with <code>rows and columns numbered starting at 1</code>.</div></figure></div><div id="75479d74-aac2-4fec-99d1-93e9dbfed2ca" style="width:43.75000000000001%" class="column"><figure id="8f4a8fd0-1945-4a7d-8982-09fddd64f393" class="image"><a href="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/Untitled%201.png"><img style="width:357px" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/Untitled%201.png"/></a></figure></div></div><h1 id="2d94885f-3b2a-4e6f-8e38-ed37cee786f0" class="block-color-purple_background">微控制器 GPIO 應用實作 - Arduino UNO</h1><figure class="block-color-orange callout" style="white-space:pre-wrap;display:flex" id="adcccb1c-2c9e-4286-b287-f5b3a841afcc"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02.png"/></div><div style="width:100%">以下為微控制器 GPIO 應用實作，請使用 TinkerCAD 線上模擬器完成指定的功能設計。</div></figure><p id="ba59e802-099f-4652-80f1-2195519c4aaf" class="">
+</p><h3 id="56d39c6c-62c4-4a8f-a3bd-0cf4881b3744" class="block-color-blue_background">Problem 05 -  以不使用 <code>delay(...)</code> 函數的方式，將兩顆LED的閃爍設計成上數計數器。</h3><figure class="block-color-orange callout" style="white-space:pre-wrap;display:flex" id="d2947782-0877-46e9-b477-894f526da58a"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02.png"/></div><div style="width:100%">參考期中複習所提供的練習題，將兩顆LED的閃爍設計成上數計數器，延遲時間可以自選但必須具備辨識度。</div></figure><figure class="callout" style="white-space:pre-wrap;display:flex" id="1616c089-98d8-4d15-9cb5-c00f6b9871e5"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02%205.png"/></div><div style="width:100%"><mark class="highlight-orange">【額外加分】 將驅動LED的函數修改成通用型函數，也就是不管使用幾顆LED，都是使用同一個函數加上特定參數。</mark></div></figure><figure id="ccd24b7b-d7c5-4933-818e-5e92af975359" class="image"><a href="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/prob01.gif"><img style="width:2840px" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/prob01.gif"/></a></figure><p id="3b83d13e-a45d-4be8-b229-200b4bf6c737" class="">
+</p><h3 id="a107e117-b32c-4757-bc23-d5a10ed619b3" class="block-color-blue_background">Problem 06 -  使用按鍵(正邊緣觸發)來切換LED閃爍模式。</h3><figure class="block-color-orange callout" style="white-space:pre-wrap;display:flex" id="85fead8b-5a49-47b2-92cb-13ffd87f095a"><div style="font-size:1.5em"><img class="icon" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/yang02.png"/></div><div style="width:100%">參考期中複習所提供的練習題，將 Problem 05 的設計加上一顆控制按鍵，使用按鍵來切換4個模式(0、1、2、3)，模式0：兩顆LED全暗、模式1：只閃爍快速LED、模式2：只閃爍慢速LED、模式3：兩顆LED同時閃爍(運作模式同 Problem 05)。</div></figure><figure id="d7e5f3db-c239-4d89-810f-cd3e616d8b88" class="image"><a href="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/prob02.gif"><img style="width:2356px" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/prob02.gif"/></a></figure><p id="61a1a685-c81a-4f36-9afc-e0a0e125ebfe" class="">
+</p><p id="08ac4972-620c-4d73-83d3-fd4b98291fd2" class="">
+</p><figure id="ee669478-821a-4e84-81d0-23573fc94b0a" class="image"><a href="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/exam01.png"><img style="width:4208px" src="%E5%96%AE%E6%99%B6%E7%89%87%E5%BE%AE%E8%99%95%E7%90%86%E6%A9%9F%E5%AF%A6%E5%8B%99%20Midterm%20Exam%209b2ecbff40b142b081e7296fe1285289/exam01.png"/></a></figure><p id="448c6370-8a12-44c0-a4a9-9624545d0eac" class="">
+</p><p id="f60551b5-3317-4fe6-8f39-8ea759378d84" class="">
+</p><p id="869cf3d5-0774-4ea1-8ee6-fde02a6f0056" class="">
+</p></div></article></body></html>

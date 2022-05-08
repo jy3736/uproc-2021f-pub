@@ -1,0 +1,781 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>I2C Communication 2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><link rel="stylesheet" href="dark-theme.css"><link rel="stylesheet"  target="_blank" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github-dark-dimmed.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script></head><body><article id="cf2017bf-171d-47fd-ae99-a8c30d70dbd8" class="page sans"><header><img class="page-cover-image" src="I2C%20Communication%201%20b32521aac2c3420093f0ca33ee676f26/mcu5.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="I2C%20Communication%201%20b32521aac2c3420093f0ca33ee676f26/yang-tr-wb.png"/></div><h1 class="page-title">I2C Communication 2</h1><table class="properties"><tbody><tr class="property-row property-row-text"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>課程單元</th><td>串列介面 I2C 實驗(二)</td></tr></tbody></table><link rel="stylesheet" href="dark-theme.css"><link rel="stylesheet"  target="_blank" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/github-dark-dimmed.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script></header><div class="page-body"><h1 id="feeeccba-df7e-416d-8308-edf5490e67ab" class="block-color-pink_background">學習目標</h1><h3 id="d61d3cc7-394e-434d-aa85-c708ec38484c" class="block-color-orange">1. I2C 串列通訊介面應用。</h3><h3 id="5fd9c776-0b98-483e-908c-6932a5db786a" class="block-color-orange">2. Raspberry Pi ↔ I2C ↔ Arduino UNO。</h3><h1 id="bd0c6b14-ad49-4b9b-a211-1e65dc457f33" class="block-color-pink_background">參考資料</h1><ul id="9b954328-e194-423e-b0f9-f8489ea6119b" class="bulleted-list"><li style="list-style-type:disc"><a  target="_blank" href="https://pinout.xyz/">The Raspberry Pi GPIO pinout guide.</a></li></ul><ul id="3b20ed03-94fa-4570-baa2-0e1a1514372e" class="bulleted-list"><li style="list-style-type:disc"><a  target="_blank" href="https://www.engineersgarage.com/raspberrypi/articles-raspberry-pi-i2c-bus-pins-smbus-smbus2-python/">Synchronous serial communication in Raspberry Pi using I2C protocol</a></li></ul><ul id="b9da6120-6df4-4478-8ad6-a1545e2b1207" class="bulleted-list"><li style="list-style-type:disc"><a  target="_blank" href="https://www.programiz.com/python-programming/methods/string/encode">Python String encode(); UTF-8 / ASCII</a></li></ul><ul id="2ae47d08-e4a0-46fa-b56e-3e830b77271e" class="bulleted-list"><li style="list-style-type:disc"><a  target="_blank" href="https://www.aranacorp.com/en/communication-between-raspberry-pi-and-arduino-with-i2c/">Communication between Raspberry Pi and Arduino with I2C</a></li></ul><h1 id="d8dd2a5e-ee91-4993-8bc2-70b5bfdc39a8" class="block-color-pink_background">課程設計</h1><h3 id="2941d1c4-90f8-42e1-a025-74bba97fe924" class="block-color-orange">Arduino Sketch <code>rpi_i2c_lab01.ino</code></h3><div id="7c778eca-b833-44c7-9c91-c89785f79517" class="column-list"><div id="3c9efe3c-114d-420d-81e1-4c56c11bb930" style="width:50%" class="column"><pre id="0e5638a2-5021-4f02-bf44-b880853181f2" class="code"><code>#include &lt;Wire.h&gt;
+
+#define I2C_SLAVE_ADDRESS 11
+#define PAYLOAD_SIZE 2
+
+int cntdown = 0;
+
+//----------------------------------------
+void setup() {
+  Wire.begin(I2C_SLAVE_ADDRESS);
+  Serial.begin(9600); 
+  Serial.println(&quot;--- I am Slave1 ---&quot;);
+  delay(1000);               
+  Wire.onRequest(requestEvents);
+  Wire.onReceive(receiveEvents);
+}
+
+//----------------------------------------
+void loop() {}
+
+//----------------------------------------
+void requestEvents() {
+  Serial.print(&quot;sending value : &quot;);
+  while(cntdown&gt;0) {
+    int rn = random(100);
+    Serial.print(rn);
+    Serial.print(&#x27; &#x27;);
+    Wire.write(rn);
+    cntdown--;
+  }
+  Serial.println(&quot;\n&quot;);
+}
+</code></pre></div><div id="e8ebbd1c-873f-495d-8f5a-56e3e1bfb00c" style="width:50%" class="column"><pre id="27573fb8-32f3-43d5-a80f-76db3f39c771" class="code"><code>//----------------------------------------
+//----------------------------------------
+void receiveEvents(int nb)
+{  
+    byte cmd;
+    Serial.print(&quot;Num of bytes received : &quot;);
+    Serial.println(nb);
+    if (Wire.available()) {
+      cmd = Wire.read();
+      if (cmd&lt;=20) 
+        cntdown = cmd;
+      Serial.print(&quot;cmd : &quot;);
+      Serial.println(cmd);
+    }
+    if (nb&gt;1) {
+      Serial.print(&quot;Data received : &quot;);
+      while (Wire.available()) { 
+        byte c = Wire.read();  
+        switch(cmd) {
+          case 123 : Serial.print(char(c));
+                     break;
+          case 111 : 
+          default:
+                     Serial.print(c);
+                     Serial.print(&quot; &quot;);
+                     break;
+        }
+      }
+      Serial.println(&quot;\n&quot;);
+    } 
+}</code></pre></div></div><h2 id="3a388f11-eff6-4eb8-a460-f240d2f3c8b7" class="block-color-orange">課堂練習 1 - Raspberry Pi (Master) → Arduino (Slave)</h2><h3 id="a8b1d441-edfb-4970-9c28-634a6fcd53b5" class="block-color-yellow">Detect I2C Status</h3><div id="a01f306c-ba0d-4486-ba1d-2905825cd620" class="column-list"><div id="d06cc47f-85a8-452e-8eae-65ec2632a23c" style="width:31.25%" class="column"><pre id="0098be53-613a-476c-97d9-391399672ebe" class="code"><code>sudo i2cdetect -y 1</code></pre></div><div id="ff840a18-fbff-4533-ba91-96c75b0e4b19" style="width:68.75%" class="column"><figure id="6ea7c6a8-b17d-4e10-9474-18c973ef06d6" class="image"><a href="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled.png"><img style="width:336px" src="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled.png"/></a></figure></div></div><div id="3f293add-b2fb-4b6b-a89b-ea960a6cdf09" class="column-list"><div id="a9d879f1-271f-4a8e-be97-420727b8e93d" style="width:56.25%" class="column"><pre id="ace1813f-94ea-4412-8e64-f4b7d9477d96" class="code"><code>import smbus2 as smbus 
+from time import sleep
+from random import randrange, random
+
+I2C_ADDR = 11
+PORT = 1
+
+def i2c_write_bytes(data):
+    cmd = 0
+    if type(data) is type(&quot;&quot;):
+        data = data.encode(&quot;ascii&quot;)
+        cmd = 123
+    elif type(data) is type([]):
+        cmd = 111
+        data = bytes(data)
+    i2cbus = smbus.SMBus(PORT)
+    i2cbus.write_i2c_block_data(I2C_ADDR, cmd, data)
+    sleep(0.5)
+
+def toArduino(msg):
+    i2c_write_bytes(msg)
+    
+if __name__ == &#x27;__main__&#x27;:
+    toArduino(&quot;STUST&quot;)
+    toArduino([11,32,23,47,58])    
+    toArduino(&quot;2021 Fall&quot;)</code></pre></div><div id="59e79b76-e1eb-49c0-9fe8-0d334ac560b5" style="width:43.75%" class="column"><h3 id="664afbab-a6c0-4172-84d0-18e29ca8fb52" class="block-color-yellow">Arduino Serial Monitor</h3><figure id="2fc771d6-ca7b-4522-b71f-5bbd8c3c91f4" class="image"><a href="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled%201.png"><img style="width:240px" src="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled%201.png"/></a></figure></div></div><h2 id="dde3c51d-f540-481d-85cb-61bdf05f2cae" class="block-color-orange">課堂練習 2 - Raspberry Pi (Master) ← Arduino (Slave)</h2><div id="b10e13cf-6028-489e-9eb3-48560dea2a49" class="column-list"><div id="4110d014-a80c-4ade-acc6-b09514900461" style="width:56.25%" class="column"><pre id="5ae0d8a0-cb25-45f6-bbea-1276bbb9a216" class="code"><code>import smbus2 as smbus 
+from time import sleep
+from random import randrange, random
+
+I2C_ADDR = 11
+PORT = 1
+
+def i2c_read_bytes(nb):
+    i2cbus = smbus.SMBus(PORT)
+    cmd = nb
+    data = i2cbus.read_i2c_block_data(I2C_ADDR, cmd, nb)
+    sleep(0.5)
+    return data
+
+def arduino2pi(n):
+    recv = i2c_read_bytes(n)
+    print(f&quot;receved : {recv}&quot;)
+    
+if __name__ == &#x27;__main__&#x27;:
+    arduino2pi(6)
+    arduino2pi(3)
+    arduino2pi(8)</code></pre></div><div id="a524df9d-6649-4c47-86c8-f1f97735aa86" style="width:43.75000000000001%" class="column"><h3 id="23ab9a27-9e77-4a84-aef0-d13045db1ea7" class="block-color-yellow">Raspberry Pi - Python</h3><figure id="d7424e50-0285-48b5-8e2b-4274dd95966b" class="image"><a href="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled%202.png"><img style="width:288px" src="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled%202.png"/></a></figure><h3 id="33ce77dd-ad94-4d3d-81d5-ab25cc29d47d" class="block-color-yellow">Arduino Serial Monitor</h3><p id="071bf0ea-c1b4-45fa-ad0b-dc726a53a0ef" class="">
+</p><figure id="8e750afd-3d1b-4976-9acd-80f6442cbf51" class="image"><a href="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled%203.png"><img style="width:288px" src="I2C%20Communication%202%20cf2017bf171d47fdae99a8c30d70dbd8/Untitled%203.png"/></a></figure></div></div><h1 id="504669f7-8df2-4f7a-8fbc-dee57615652c" class="block-color-pink_background">課堂作業</h1><h2 id="de86a716-ff20-4b85-95c5-5b8c574bbb54" class="block-color-orange">Homework 01 - 完成課堂練習 1、2 的實體驗證。 </h2><p id="809b009c-c2b6-4237-ae6b-f492704e830a" class="block-color-orange">
+</p><figure id="e833cbbd-8453-4693-9a9e-6ef5b18921c8" class="image"><a href="I2C%20Communication%201%20b32521aac2c3420093f0ca33ee676f26/%E5%9C%96%E7%89%873.png"><img style="width:1322px" src="I2C%20Communication%201%20b32521aac2c3420093f0ca33ee676f26/%E5%9C%96%E7%89%873.png"/></a></figure></div></article>
+<script>hljs.highlightAll();</script>
+</body></html>
