@@ -1,0 +1,515 @@
+[{
+        "id": "766ddd8d.c23e94",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3ed55620.705b7a",
+        "type": "mqtt-broker",
+        "name": "study-room-pi",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "bf5e23e0.24159",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#b4cc00",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#357709",
+                "baseFont": "Arial Black,Arial Black,Gadget,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#357709",
+                    "edited": true
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#357709",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#55be0e",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#357709",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "Arial Black,Arial Black,Gadget,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "6fdedc95.775414",
+        "type": "ui_tab",
+        "name": "智慧交通號誌控制系統 (微處理器設計實務 Fall 2020 - 期末微型專題範例 1)",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "7914f20d.76237c",
+        "type": "ui_group",
+        "name": "特殊模式",
+        "tab": "6fdedc95.775414",
+        "order": 1,
+        "disp": true,
+        "width": "5",
+        "collapse": false
+    },
+    {
+        "id": "81aace67.e1ef5",
+        "type": "ui_group",
+        "name": "路口影像",
+        "tab": "6fdedc95.775414",
+        "order": 3,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "75a61e82.944e1",
+        "type": "ui_group",
+        "name": "一般模式(交通號誌燈)",
+        "tab": "6fdedc95.775414",
+        "order": 2,
+        "disp": true,
+        "width": "5",
+        "collapse": false
+    },
+    {
+        "id": "1c70d4cd.325c0b",
+        "type": "ui_group",
+        "name": "LiveVideo",
+        "tab": "",
+        "order": 1,
+        "disp": false,
+        "width": "35",
+        "collapse": false
+    },
+    {
+        "id": "da4f1dcb.91d79",
+        "type": "mqtt out",
+        "z": "766ddd8d.c23e94",
+        "name": "",
+        "topic": "p203",
+        "qos": "",
+        "retain": "",
+        "broker": "3ed55620.705b7a",
+        "x": 590,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "7a35adfb.0ceb64",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式0",
+        "group": "7914f20d.76237c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 0 : 雙向(紅黃綠)全暗",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "0",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 620,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "efba9fc9.05a7b",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式1",
+        "group": "7914f20d.76237c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 1 : 橫向(紅)\t縱向(綠)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 660,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "6d17abcb.cecff4",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式2",
+        "group": "7914f20d.76237c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 2 : 橫向(綠)\t縱向(紅)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "2",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 700,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "23e39143.79e47e",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式3",
+        "group": "7914f20d.76237c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 3 : 雙向(閃紅)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "3",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 740,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "22cc46d9.4de9fa",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式4",
+        "group": "7914f20d.76237c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 4 : 雙向(閃黃)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "4",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 780,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "412ba55a.9bbdec",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式5",
+        "group": "75a61e82.944e1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 5 : 尖峰時段",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "5",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 820,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "883a440c.a85548",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式6",
+        "group": "75a61e82.944e1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 6 : 一般時段",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "6",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 860,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "105341b3.75354e",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式7",
+        "group": "75a61e82.944e1",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 7 : 夜間時段",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "7",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 900,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "4646c1bd.18c9a",
+        "type": "ui_button",
+        "z": "766ddd8d.c23e94",
+        "name": "模式8",
+        "group": "75a61e82.944e1",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "模式 8 : 手動",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "8",
+        "payloadType": "str",
+        "topic": "",
+        "x": 210,
+        "y": 940,
+        "wires": [
+            [
+                "da4f1dcb.91d79",
+                "7573f00e.32769"
+            ]
+        ]
+    },
+    {
+        "id": "1c079ba4.8ab374",
+        "type": "inject",
+        "z": "766ddd8d.c23e94",
+        "name": "",
+        "props": [{
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "checkWeb",
+        "payloadType": "str",
+        "x": 530,
+        "y": 980,
+        "wires": [
+            [
+                "53e289f6.852fa8"
+            ]
+        ]
+    },
+    {
+        "id": "53e289f6.852fa8",
+        "type": "ui_template",
+        "z": "766ddd8d.c23e94",
+        "group": "81aace67.e1ef5",
+        "name": "Just a view of cameras",
+        "order": 1,
+        "width": 8,
+        "height": 7,
+        "format": "<!DOCTYPE html>\n<html>\n<style>\nimg {\n    border: 1px solid #ddd;\n    border-radius: 8px;\n    padding: 2px;\n    width: 405px;\n}\n</style>\n\n<script type=\"text/javascript\">\nscope.$watch('msg', function(msg) {\n    inMessage(msg.payload);\n});\n\nfunction updatePic() {\n    document.getElementById('c0').src = \"http://192.168.0.116:8083\";\n    //alert('updated pics');\n}\n\nfunction inMessage(event) {\n    if (event.match('checkWeb')) {\n        updatePic();\n    }\n}\n\n</script>\n<center>\n<table>\n    <tr><!-- Row 1 -->\n    \t\t<td style=\"text-align: center\"><img src=\"\" id=\"c0\" /></td>\n    </tr>\n</table>\n</center>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "x": 760,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42cadc1b.1d0874",
+        "type": "ui_template",
+        "z": "766ddd8d.c23e94",
+        "group": "81aace67.e1ef5",
+        "name": "Clock Toolbar",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "\n<script id=\"titleScript\" type=\"text/javascript\">\n    $('#clock').remove();\n    var toolbar = $('.md-toolbar-tools');\n    var div = $('<div></div>');\n    var p = $('<p/ id=\"clock\">');\n    $('#titleScript').parent().hide();\n    div.append(p);\n    div[0].style.margin = '5px 5px 5px auto';\n    toolbar.append(div);\n\n    function displayTitle(lh) {\n        p.text(lh); \n    }\n    \n    function upTime() {\n        var d = new Date();\n        p.text(d.toLocaleTimeString('de-AT'));\n    }\n\n    // Watch the payload and update the title\n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n            if (data.match(\"systemsummary\")) { //Systemstatus\n                m = data;\n                n = m.split(':');\n                //alert(n[1]);\n                var sSummary = parseInt(n[1], 10);\n                if(sSummary === 14){\n                    document.getElementById(\"clock\").style.backgroundColor =\"transparent\";\n                }\n                if(sSummary < 14){\n                    document.getElementById(\"clock\").style.backgroundColor =\"#FF0033\";\n                }\n            }else{\n                displayTitle(data);\n            }\n        });\n        setintv(upTime,1000);\n    })(scope);\n</script>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "x": 520,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7573f00e.32769",
+        "type": "ui_text",
+        "z": "766ddd8d.c23e94",
+        "group": "81aace67.e1ef5",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "current-mode",
+        "label": "目前交通號誌模式 : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 680,
+        "y": 740,
+        "wires": []
+    }
+]
